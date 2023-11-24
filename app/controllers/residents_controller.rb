@@ -11,8 +11,6 @@ class ResidentsController < ApplicationController
                  else
                    Resident.order(created_at: :desc).includes(:address).page params[:page]
                  end
-
-    render json: { data: @residents }, status: :ok
   end
 
   # GET /residents/1 or /residents/1.json
