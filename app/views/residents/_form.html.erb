@@ -1,146 +1,112 @@
 <%= form_for @resident do |f| %>
-  <div class="form mt-5">
-    <div class="resident_form">
+  <div class="form mt-5 d-flex justify-content-center">
+    <div class="me-5">
       <h3>Informações</h3>
-      <div class="input">
-        <label for="resident_full_name">
-          Nome Completo
+      <div class="my-3">
+        <label for="resident_full_name" class="form-label">
+          Nome Completo*
         </label>
-          <%= f.text_field :full_name, placeholder: "John Doe" %>
+          <%= f.text_field :full_name, placeholder: "John Doe", class: "form-control", :required => true %>
       </div>
 
-      <div class="input">
-        <label for="resident_cpf">
-          CPF
+      <div class="my-3">
+        <label for="resident_cpf" class="form-label">
+          CPF*
         </label>
-          <%= f.text_field :cpf, placeholder: "000.000.000-00" %>
+          <%= f.text_field :cpf, placeholder: "000.000.000-00", class: "form-control", :required => true %>
       </div>
 
-      <div class="input">
-        <label for="resident_cns">
-          CNS
+      <div class="my-3">
+        <label for="resident_cns" class="form-label">
+          CNS*
         </label>
-          <%= f.text_field :cns %>
+          <%= f.text_field :cns, class: "form-control", :required => true %>
       </div>
 
-      <div class="input">
-        <label for="resident_email">
-          Email
+      <div class="my-3">
+        <label for="resident_email" class="form-label">
+          Email*
         </label>
-          <%= f.text_field :email, placeholder: "email@email.com" %>
+          <%= f.text_field :email, placeholder: "email@email.com", class: "form-control", :required => true %>
       </div>
 
-      <div class="input">
-        <label for="resident_birth_date">
-          Data de nascimento
+      <div class="my-3">
+        <label for="resident_birth_date" class="form-label">
+          Data de nascimento*
         </label>
-          <%= f.date_field :birth_date, value: @resident.birth_date %>
+          <%= f.date_field :birth_date, value: @resident.birth_date, class: "form-control", :required => true %>
       </div>
 
-      <div class="input">
-        <label for="resident_phone">
-          Celular
+      <div class="my-3">
+        <label for="resident_phone" class="form-label">
+          Celular*
         </label>
-        <%= f.text_field :phone, placeholder: "99 99999-9999" %>
+        <%= f.text_field :phone, placeholder: "99 99999-9999", class: "form-control", :required => true %>
       </div>
 
-      <div class="input">
-        <label for="resident_picture">
+      <div class="my-3">
+        <label for="resident_picture" class="form-label">
           Foto
         </label>
-        
-        <img id="preview" src="#" alt="your image" style="height: 200px" />
+        <%= image_tag(@resident.avatar.thumb.url) if @resident.avatar? %>
+        <%= f.file_field :avatar, class: "form-control-file" %>
+        <%= f.hidden_field :avatar_cache %>
       </div>
     </div>
 
-    <div class="address_form">
+    <div class="ms-5">
       <h3>Endereço</h3>
       <%= f.fields_for :address do |address_form| %>
-        <div class="input">
-          <label for="resident_address_attributes_cep">
-            CEP
+        <div class="my-3">
+          <label for="resident_address_attributes_zip_code" class="form-label">
+            CEP*
           </label>
-            <%= address_form.text_field :cep %>
+            <%= address_form.text_field :zip_code, class: "form-control", :required => true %>
         </div>
-        <div class="input">
-          <label for="resident_address_attributes_street">
-            Rua
+        <div class="my-3">
+          <label for="resident_address_attributes_street" class="form-label">
+            Rua*
           </label>
-            <%= address_form.text_field :street %>
+            <%= address_form.text_field :street, class: "form-control", :required => true %>
         </div>
-        <div class="input">
-          <label for="resident_address_attributes_neighborhood">
-            Bairro
+        <div class="my-3">
+          <label for="resident_address_attributes_neighborhood" class="form-label">
+            Bairro*
           </label>
-            <%= address_form.text_field :neighborhood %>
+            <%= address_form.text_field :neighborhood, class: "form-control", :required => true %>
         </div>
-        <div class="input">
-          <label for="resident_address_attributes_city">
-            Cidade
+        <div class="my-3">
+          <label for="resident_address_attributes_city" class="form-label">
+            Cidade*
           </label>
-            <%= address_form.text_field :city %>
+            <%= address_form.text_field :city, class: "form-control", :required => true %>
         </div>
-        <div class="input">
-          <label for="resident_address_attributes_state">
-            UF
+        <div class="my-3">
+          <label for="resident_address_attributes_state" class="form-label">
+            UF*
           </label>
-            <%= address_form.text_field :state %>
+            <%= address_form.text_field :state, class: "form-control", :required => true %>
         </div>
-        <div class="input">
-          <label for="resident_address_attributes_complement">
+        <div class="my-3">
+          <label for="resident_address_attributes_secondary_address" class="form-label">
             Complemento
           </label>
-            <%= address_form.text_field :secondary_address %>
+            <%= address_form.text_field :secondary_address, class: "form-control" %>
         </div>
       <% end %>
 
     </div>
   </div>
-  <div class="submit">
+  <div class="submit d-flex justify-content-center my-4">
     <%= f.submit request.path.include?('new') ? "Criar Municipe" : "Editar Municipe", class: "btn btn-success" %>
   </div>
-  <%= link_to "Menu", residents_path, id: "menu" %>
+  <%= link_to "Menu", residents_path, id: "menu", class: " d-flex justify-content-center text-decoration-none" %>
 <% end %>
 
-
-<style>
-
-  #menu {
-    text-align: center;
-    margin: 0 auto
-  }
-
-  .form {
-    display: flex;
-    justify-content: center;
-  }
-
-  .resident_form {
-    margin-right: 50px
-  }
-  .address_form {
-    margin-left: 50px
-  }
-
-  input {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-  }
-
-  input[type=submit] {
-    width: 50%
-  }
-
-  .submit, #menu {
-    display: flex;
-    justify-content: center;
-    text-decoration: none
-  }
-</style>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <script>
+  
   //preview.style.display = "none";
   /*imgInp.onchange = evt => {
     const [file] = imgInp.files

@@ -3,9 +3,16 @@ class ResidentsController < ApplicationController
 
   # GET /residents or /residents.json
   def index
-    @residents = Resident.order(created_at: :desc).includes(:address).page params[:page]
+    @residents = if params[:search].present?
+                   Resident.joins(:address).where(
+                     'lower(addresses.city) LIKE ? OR lower(addresses.state) = ? OR lower(residents.full_name) LIKE ?',
+                     "%#{params[:search]}%".downcase, params[:search].downcase, "%#{params[:search]}%"
+                   ).includes(:address).page params[:page]
+                 else
+                   Resident.order(created_at: :desc).includes(:address).page params[:page]
+                 end
 
-    # render json: { data: @residents }, status: :ok
+    render json: { data: @residents }, status: :ok
   end
 
   # GET /residents/1 or /residents/1.json
@@ -70,6 +77,6 @@ class ResidentsController < ApplicationController
   def resident_params
     params.require(:resident)
           .permit(:full_name, :cpf, :cns, :email, :birth_date, :phone, :avatar, :is_active,
-                  address_attributes: %i[id cep street neighborhood city state secondary_address])
+                  address_attributes: %i[id zip_code street neighborhood city state secondary_address])
   end
 end

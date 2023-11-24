@@ -11,6 +11,7 @@ class Resident < ApplicationRecord
   validates :full_name, :cpf, :cns, :email, :birth_date, :phone, presence: true
   validates_format_of :email, with: EMAIL_REGEX
   validate :cpf_is_valid?, :cns_is_valid?, :birth_date_is_valid?
+  accepts_nested_attributes_for :address
 
   after_save :send_email_and_sms
 
