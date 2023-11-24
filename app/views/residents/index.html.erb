@@ -1,0 +1,32 @@
+<h1 class="my-4">Lista de Munícipes</h1>
+
+<div id="residents">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th class="bg-success bg-gradient text-white">Full Name</th>
+        <th class="bg-success bg-gradient text-white">CPF</th>
+        <th class="bg-success bg-gradient text-white">CNS</th>
+        <th class="bg-success bg-gradient text-white">Telefone</th>
+        <th class="bg-success bg-gradient text-white">Cidade</th>
+        <th class="bg-success bg-gradient text-white">UF</th>
+        <th class="bg-success bg-gradient text-white">Status</th>
+        <th class="bg-success bg-gradient text-white">Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'residents_table', collection: @residents, as: :resident %>
+    </tbody>
+  </table>
+
+  <div class="text-end mb-5">
+    <%= page_entries_info @residents, entry_name: "municipe" %>
+    <div class="d-flex justify-content-end">
+      <%= paginate @residents, remote: true %>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-end">
+  <%= link_to "Criar novo Munícipe", new_resident_path, class: "btn btn-success flex-end" %>
+</div>

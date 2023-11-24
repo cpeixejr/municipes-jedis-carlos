@@ -1,0 +1,19 @@
+<tr>
+  <td><%= resident.full_name %></td>
+  <td><%= "#{resident.cpf.first(3)}.***.***-#{resident.cpf.last(2)}" %></td>
+  <td><%= "#{resident.cns.first(3)}************" %></td>
+  <td><%= "(#{resident.phone.first(2)}) *****-#{resident.phone.last(4)}"%></td>
+  <td> <%= resident.address.city if resident.address  %> </td>
+  <td> <%= resident.address.state if resident.address %> </td>
+  <td> <%= resident.is_active ? "Ativo" : "Inativo" %> </td>
+  <td>
+    <div class="dropdown">
+      <button id="dropdownOptions-<%=resident.id%>" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Opções
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu" area-labelled-by="dropdownOptions-<%=resident.id%>">
+        <li><%= link_to "Editar", edit_resident_path(resident.id), class: "dropdown-item" %></li>
+        <li><%= button_to resident.is_active ? "Desativar" : "Ativar", status_resident_path(resident.id), data: { "turbo": false }, method: :post, class: "dropdown-item" %></li>
+      </ul>
+    </div>
+  </td>
+</tr>
